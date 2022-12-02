@@ -7,53 +7,6 @@ import std/tables
 import unicode
 import strutils
 import sequtils
-import std/strformat
-import std/algorithm
-
-proc printTM(tm: Turingmachine)=
-    var str = ""
-    var table = initTable[State, Table[string, string]]()
-    for key, val in tm.δ:
-        #TransitionTableKey* = tuple[state: State, symbol: Symbol]
-        var tableVal = table.getOrDefault(key.state)
-        tableVal[$key.symbol] = "(" & val.newState & "," & $val.newSymbol & "," & $val.movement & ")"
-        table[key.state] = tableVal
-    var keys: seq[string] = @[]
-    for key in table.keys:
-        keys.add($key)
-    var headers: seq[string] = @[]
-    for key in tm.Γ:
-        headers.add($key)
-    keys.sort()
-    headers.sort()
-
-    str &= "Q={" & keys.join(",") & "}\n"
-    str &= "Σ={" & tm.Σ.mapIt($it).join(",") & "}\n"
-    str &= "Γ={" & tm.Γ.mapIt($it).join(",") & "}\n"
-    str &= "q₀=" & tm.q0 & "\n"
-    str &= "□=" & $tm.b & "\n"
-    str &= "F={" & tm.F.mapIt($it).join(",") & "}\n"
-    str &= "δ=\n"
-
-    str &= strutils.align("", 14)
-    for header in headers:
-        if header == " ":
-            str &= strutils.align("space", 18)
-        else:
-            str &= strutils.align(header, 18)
-    str &= "\n"
-    str &= strutils.align("", 14)
-    str &= strutils.align("", 18*len(headers), '-')
-    str &= "\n"
-    for key in keys:
-        str &= strutils.align(fmt"{key} | ", 14)
-        for sym in headers:
-            var transition = table[key].getOrDefault(sym, "error")
-            str &= strutils.align(transition, 18)
-        str &= "\n"
-
-    echo str
-
 
 proc log2(i: int): float = log2(i.toFloat)
 
