@@ -6,8 +6,7 @@ import std/sets
 import std/tables
 import unicode
 import strutils
-import sequtils
-import ../p01/p01
+import ../d01/p01
 
 proc createBand(entireFile: string): string =
     for line in entireFile.splitlines():
@@ -87,10 +86,10 @@ proc main()=
 
     var Adder = getTm()
     Adder.setInput($M.band)
-    #Adder.run(false)
+    Adder.run(false)
     echo "Output: " & $Adder.band
-    #var decoded = decode(Adder)
-    #echo "Decoded: " & $decoded
+    var decoded = decode(Adder)
+    echo "Decoded: " & $decoded
 
     printTM(M)
 
