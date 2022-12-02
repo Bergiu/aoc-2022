@@ -1,22 +1,12 @@
 include ../lib/types
 include ../lib/band
 include ../lib/turingmachine
+include ../lib/common
 import std/sets
-import std/math
 import std/tables
 import unicode
 import strutils
 import sequtils
-
-proc log2(i: int): float = log2(i.toFloat)
-
-proc bin(i: int): string =
-    if i == 0:
-        result = "0"
-    else:
-        result = i.toBin(ceil(log2(i+1)).toInt)
-        # wohlformatiert
-        result = i.toBin(20)
 
 
 proc createBand(filename: string): string =
@@ -28,7 +18,17 @@ proc createBand(filename: string): string =
         else:
             result &= "|"
 
-proc main()=
+proc decode*(M: Turingmachine): string =
+    # decode band
+    $($M.band)
+            .replace(" ", "")
+            .replace("#", "")
+            .split("|")
+            .filterit(it.len != 0)
+            .mapIt(align(it, 64, '0'))
+            .mapIt(fromBin[int64](it))
+
+proc getTm*(): Turingmachine=
     # Doppelkreuz (#): Blank
     # Newline (|): Trennzeichen
     # Space ( ): Leer
@@ -203,16 +203,20 @@ proc main()=
     M.δ[("b0", '1'.Rune)] = ("a0", '1'.Rune, Movement.N)
     # M.δ[("b0", '|'.Rune)] #error, three pipes?
 
+    return M
 
-# addition
-#|1010|0011||
-#|1010|0011 ||
-#|101 |001 1||
-#|10  |00 01||
-#|1   |0 101||
-#|    | 1101||
-#|      1101||
-#|1101||
+proc main()=
+    var M = getTm()
+
+    # addition
+    #|1010|0011||
+    #|1010|0011 ||
+    #|101 |001 1||
+    #|10  |00 01||
+    #|1   |0 101||
+    #|    | 1101||
+    #|      1101||
+    #|1101||
 
 
     #M.setInput("añyóng")
@@ -231,15 +235,7 @@ proc main()=
     echo "Input:  " & $M.band
     M.run(false)
     echo "Output:  " & $M.band
-
-    # decode band
-    var decoded = ($M.band)
-            .replace(" ", "")
-            .replace("#", "")
-            .split("|")
-            .filterit(it.len != 0)
-            .mapIt(align(it, 64, '0'))
-            .mapIt(fromBin[int64](it))
+    var decoded = decode(M)
     echo "Decoded: " & $decoded
 
     printTM(M)

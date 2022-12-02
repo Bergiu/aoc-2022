@@ -61,7 +61,7 @@ method setInput*(self: Turingmachine, input: string) {.base.} =
     self.band = newBand(input, self.b)
 
 
-proc printTM(tm: Turingmachine)=
+proc printTM*(tm: Turingmachine)=
     var str = ""
     var table = initTable[State, Table[string, string]]()
     for key, val in tm.δ:
