@@ -1,4 +1,4 @@
-lines = [open("inp.txt").read().splitlines()]
+lines = open("inp.txt").read().splitlines()
 
 mapping = {
     "A X": 4, "A Y": 8, "A Z": 3,
