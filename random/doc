@@ -1,0 +1,10 @@
+Q: ist das endliche Zustandsmenge
+Σ: ist das endliche Eingabealphabet
+Γ: ist das endliche Bandalphabet und es gilt Σ ⊂ Γ
+δ: (Q\F)⨯Γ→Q⨯Γ⨯{L,N,R} ist die (partielle) Überführungsfunktion
+q₀∈Q: ist der Anfangszustand
+□∈Γ\Σ: steht für das leere Feld (Blank)
+F⊆Q: die Menge der akzeptierenden Endzustände
+
+accept steht als Abkürzung für (F₀,1,N)
+reject steht als Abkürzung für (F₀,0,N)
