@@ -29,18 +29,31 @@ proc main()=
         '#'.Rune
     )
 
-    #A, X: Rock (1)
-    #B, Y: Paper (2)
-    #C, Z: Scissors (3)
+    #A: Rock (1)
+    #B: Paper (2)
+    #C: Scissors (3)
+    #X: Need to lose
+    #Y: Draw
+    #Z: Need to win
 
     #0: if you lost
     #3: if it was a draw
     #6 if you won
 
     # XYZ
+    #ACAB
+    #BABC
+    #CBCA
+
+    # ABC
     #A483
     #B159
     #C726
+
+    # XYZ
+    #A348
+    #B159
+    #C267
 
     #M.setInput("AY|BX|CZ")
     # 2 spurige tm wäre nützlich
@@ -54,17 +67,17 @@ proc main()=
     M.δ[("q0", '#'.Rune)] = ("f1", '#'.Rune, Movement.L)
 
     M.δ[("a1", '0'.Rune)] = ("a1", '0'.Rune, Movement.R)
-    M.δ[("a1", 'X'.Rune)] = ("w4", '0'.Rune, Movement.L) # 4
-    M.δ[("a1", 'Y'.Rune)] = ("w8", '0'.Rune, Movement.L) # 8
-    M.δ[("a1", 'Z'.Rune)] = ("w2", '1'.Rune, Movement.L) # 2+1
+    M.δ[("a1", 'Y'.Rune)] = ("w4", '0'.Rune, Movement.L) # 4
+    M.δ[("a1", 'Z'.Rune)] = ("w8", '0'.Rune, Movement.L) # 8
+    M.δ[("a1", 'X'.Rune)] = ("w2", '1'.Rune, Movement.L) # 2+1
     M.δ[("b1", '0'.Rune)] = ("b1", '0'.Rune, Movement.R)
     M.δ[("b1", 'X'.Rune)] = ("q0", '1'.Rune, Movement.R) # 1
     M.δ[("b1", 'Y'.Rune)] = ("w4", '1'.Rune, Movement.L) # 4+1
     M.δ[("b1", 'Z'.Rune)] = ("w8", '1'.Rune, Movement.L) # 8+1
     M.δ[("c1", '0'.Rune)] = ("c1", '0'.Rune, Movement.R)
-    M.δ[("c1", 'X'.Rune)] = ("w6", '1'.Rune, Movement.L) # 6+1
-    M.δ[("c1", 'Y'.Rune)] = ("w2", '0'.Rune, Movement.L) # 2
-    M.δ[("c1", 'Z'.Rune)] = ("w6", '0'.Rune, Movement.L) # 6
+    M.δ[("c1", 'Z'.Rune)] = ("w6", '1'.Rune, Movement.L) # 6+1
+    M.δ[("c1", 'X'.Rune)] = ("w2", '0'.Rune, Movement.L) # 2
+    M.δ[("c1", 'Y'.Rune)] = ("w6", '0'.Rune, Movement.L) # 6
 
     M.δ[("w2", '0'.Rune)] = ("q0", '1'.Rune, Movement.R) # 1x
     M.δ[("w4", '0'.Rune)] = ("w4a", '0'.Rune, Movement.L) # 10x
