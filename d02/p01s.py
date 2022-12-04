@@ -13,6 +13,7 @@ mapping = {
 
 actions = [[mapping[c] for c in line] for line in lines]
 
+
 r_mapping = np.array([
     [1,0,0],
     [0,1,0],
@@ -28,5 +29,25 @@ l_mapping = np.array([
 
 m = np.matmul(l_mapping, r_mapping)
 
-s = sum([np.matmul(L, np.matmul(m, R)) for L, R in actions])
+
+t = np.array([
+    [3,4,8],
+    [1,5,9],
+    [2,6,7],
+])
+
+a = np.array([
+    [0, 2/3, 1/3],
+    [0, 1, 0],
+    [1/3, 2/3, 0]
+])
+
+# a = np.matmul(t, np.linalg.inv(m))
+
+# a * m = t
+# a = t * m^-1
+
+b = np.matmul(a, m)
+print(m)
+s = sum([np.matmul(L, np.matmul(b, R)) for L, R in actions])
 print(s)
