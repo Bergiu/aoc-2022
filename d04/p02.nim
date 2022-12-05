@@ -1,11 +1,8 @@
 import strutils
 import sequtils
 
-proc overlaps(l, r: seq[int]): bool =
-    l[0] <= r[0] and r[0] <= l[1] or
-    l[1] <= r[0] and r[1] <= l[1] or
-    r[0] <= l[0] and l[0] <= r[1] or
-    r[1] <= l[0] and l[1] <= r[1]
+proc overlaps(l, r: HSlice): bool =
+    l.a in r or l.b in r
 
 
 var inp = """2-4,6-8
@@ -17,6 +14,7 @@ var inp = """2-4,6-8
 
 inp = readFile("inp.txt")
 
-echo inp.strip.splitlines.mapIt(it.split(",").mapIt(it.split("-").map(parseInt)))
-        .countIt(overlaps(it[0], it[1]))
+echo inp.strip.splitlines
+        .mapIt(it.split(",").mapIt(it.split("-").map(parseInt)).mapIt(it[0]..it[1]))
+        .countIt(overlaps(it[0], it[1]) or overlaps(it[1], it[0]))
 
